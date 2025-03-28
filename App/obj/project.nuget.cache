@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "n0OrH8NFPvk=",
+  "success": true,
+  "projectFilePath": "/home/fajar/Documents/ITS/NETICS/netics-1/App/App.csproj",
+  "expectedPackageFiles": [
+    "/home/fajar/.nuget/packages/dotenv.net/3.2.1/dotenv.net.3.2.1.nupkg.sha512",
+    "/home/fajar/.nuget/packages/microsoft.netcore.app.runtime.linux-x64/9.0.3/microsoft.netcore.app.runtime.linux-x64.9.0.3.nupkg.sha512",
+    "/home/fajar/.nuget/packages/microsoft.aspnetcore.app.runtime.linux-x64/9.0.3/microsoft.aspnetcore.app.runtime.linux-x64.9.0.3.nupkg.sha512",
+    "/home/fajar/.nuget/packages/microsoft.netcore.app.host.linux-x64/9.0.3/microsoft.netcore.app.host.linux-x64.9.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
