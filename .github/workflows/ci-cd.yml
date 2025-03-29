@@ -28,8 +28,8 @@ jobs:
             - name: Compiling application
               working-directory: ./App
               run: ./compile.sh
-            - name: Listing compiled application
-              working-directory: ../Dockerfile/publish
+            - name: Checking compiled application
+              working-directory: ./Dockerfile/publish
               run: ls -al
             - name: Building docker image
               working-directory: ./App
