@@ -1,5 +1,5 @@
-name: build-application
-run-name: application-builder-${{ github.actor }}
+name: build-deploy-application
+run-name: application-builder-deployer-${{ github.actor }}
 on: [push]
 
 env:
@@ -15,6 +15,7 @@ jobs:
               uses: actions/setup-dotnet@v4
               with:
                 dotnet-version: ${{ env.DOTNET_SDK_VERSION }}
+                cache: true
             - name: Setting up Docker Buildx
               uses: docker/setup-buildx-action@v3
             - name: Inserting Docker Hub Credentials
@@ -29,7 +30,7 @@ jobs:
                 echo "NRP=${{ secrets.APP_NRP }}" >> .env
             - name: Installing dependencies
               working-directory: ./App
-              run: dotnet restore
+              run: dotnet restore --locked-mode
             - name: Compiling application
               working-directory: ./App
               run: ./compile.sh
