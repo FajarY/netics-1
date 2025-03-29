@@ -25,8 +25,8 @@ jobs:
             - name: Fetching .env
               working-directory: ./App
               run: |
-                echo "NAMA=${{ secrets.APP_NAMA }}" > .env
-                echo "NRP=${{ secrets.APP_NRP }}" > .env
+                echo "NAMA=${{ secrets.APP_NAMA }}" >> .env
+                echo "NRP=${{ secrets.APP_NRP }}" >> .env
             - name: Installing dependencies
               working-directory: ./App
               run: dotnet restore
