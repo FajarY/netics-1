@@ -7,6 +7,7 @@ env:
 
 jobs:
     build:
+        environment: Production
         runs-on: ubuntu-22.04
         steps:
             - uses: actions/checkout@v4
@@ -16,6 +17,11 @@ jobs:
                 dotnet-version: ${{ env.DOTNET_SDK_VERSION }}
             - name: Setting up Docker Buildx
               uses: docker/setup-buildx-action@v3
+            - name: Fetching .env
+              working-directory: ./App
+              run: |
+                echo "NAMA=${{ secrets.APP_NAMA }}" > .env
+                echo "NRP=${{ secrets.APP_NRP }}" > .env
             - name: Installing dependencies
               working-directory: ./App
               run: dotnet restore
