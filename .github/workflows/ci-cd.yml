@@ -44,13 +44,14 @@ jobs:
                 tags: fajary/netics-1:latest
     deploy:
         environment: Production
+        needs: build
         runs-on: ubuntu-22.04
         steps:
           - uses: actions/checkout@v4
           - name: Connecting to remote Home PC & Deploy
             working-directory: ./App
             run: |
-              echo "${{ secrets.REMOTE_SSH_KEY }}" > ~/.ssh/Deploy.pem
-              chmod 400 ~/.ssh/Deploy.pem
-              cat run.sh | ssh -i ~/.ssh/Deploy.pem ${{ secrets.REMOTE_SSH_USERNAME }}@${{ secrets.REMOTE_SSH_HOST }} -p ${{ secrets.REMOTE_SSH_PORT }} /bin/bash
+              echo "${{ secrets.REMOTE_SSH_KEY }}" > Deploy.pem
+              chmod 400 Deploy.pem
+              cat run.sh | ssh -i Deploy.pem ${{ secrets.REMOTE_SSH_USERNAME }}@${{ secrets.REMOTE_SSH_HOST }} -p ${{ secrets.REMOTE_SSH_PORT }} /bin/bash
         
