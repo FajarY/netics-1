@@ -3,7 +3,7 @@ run-name: application-builder-${{ github.actor }}
 on: [push]
 
 env:
-    DOTNET_VERSION: 9.0.0
+    DOTNET_VERSION: 8.x.x
 
 jobs:
     build:
