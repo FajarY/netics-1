@@ -1,1 +1,1 @@
-docker build -t neticscicd ../Dockerfile
+docker build -t fajary/netics-1 ../Dockerfile
