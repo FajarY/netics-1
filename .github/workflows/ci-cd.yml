@@ -3,24 +3,28 @@ run-name: application-builder-${{ github.actor }}
 on: [push]
 
 env:
-    DOTNET_VERSION: 8.x.x
+    DOTNET_SDK_VERSION: 8.x.x
 
 jobs:
     build:
         runs-on: ubuntu-22.04
         steps:
             - uses: actions/checkout@v4
-            - name: Setting up .NET ${{ env.DOTNET_VERSION }}
+            - name: Setting up .NET ${{ env.DOTNET_SDK_VERSION }}
               uses: actions/setup-dotnet@v4
               with:
-                dotnet-version: ${{ env.DOTNET_VERSION }}
+                dotnet-version: ${{ env.DOTNET_SDK_VERSION }}
             - name: Setting up Docker Buildx
               uses: docker/setup-buildx-action@v3
             - name: Installing dependencies
-              run: cd App && dotnet restore
+              working-directory: ./App
+              run: dotnet restore
             - name: Compiling application
+              working-directory: ./App
               run: ./compile.sh
             - name: Listing compiled application
-              run: ls -al ../Dockerfile/publish
+              working-directory: ../Dockerfile/publish
+              run: ls -al
             - name: Building docker image
+              working-directory: ./App
               run: ./docker.sh
