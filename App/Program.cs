@@ -24,6 +24,7 @@ namespace NeticsCICD
             builder.WebHost.UseUrls("http://0.0.0.0:8080");
             var app = builder.Build();
 
+            app.MapGet("/", Index);
             app.MapGet("/health", Health);
 
             app.Run();
@@ -38,6 +39,14 @@ namespace NeticsCICD
             response.Add("uptime", (DateTime.Now - startTime).ToString());
 
             return JsonSerializer.SerializeToDocument(response);
+        }
+        public static IResult Index()
+        {
+            using(StreamReader file = File.OpenText("./public/index.html"))
+            {
+                string data = file.ReadToEnd();
+                return Results.Content(data, "text/html");
+            }
         }
     }
 }

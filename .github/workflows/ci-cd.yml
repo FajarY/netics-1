@@ -1,6 +1,9 @@
 name: build-deploy-application
 run-name: application-builder-deployer-${{ github.actor }}
-on: [push]
+on:
+  push: 
+    paths-ignore: 
+      - 'README.md'
 
 env:
     DOTNET_SDK_VERSION: 8.x.x
