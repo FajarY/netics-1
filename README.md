@@ -3,58 +3,58 @@
 Untuk membuat workflow CI-CD, kita bisa menggunakan GithubActions. Tetapi sebelum itu, pada project ini terdapat applikasi .NET yang akan memberikan response API pada endpoint /health.
 
 ```C#
-    using dotenv.net;
-    using System.Text.Json;
+using dotenv.net;
+using System.Text.Json;
 
-    namespace NeticsCICD
+namespace NeticsCICD
+{
+    public static class Program
     {
-        public static class Program
+        private static IDictionary<string, string> env = new Dictionary<string, string>();
+        private static DateTime startTime;
+
+        public static void Main(string[] args)
         {
-            private static IDictionary<string, string> env = new Dictionary<string, string>();
-            private static DateTime startTime;
+            startTime = DateTime.Now;
 
-            public static void Main(string[] args)
-            {
-                startTime = DateTime.Now;
-
-                DotEnv.Load(new DotEnvOptions(
-                    envFilePaths: new string[]
-                    {
-                        ".env"
-                    }
-                ));
-                env = DotEnv.Read();
-
-                var builder = WebApplication.CreateBuilder(args);
-                builder.WebHost.UseUrls("http://0.0.0.0:8080");
-                var app = builder.Build();
-
-                app.MapGet("/", Index);
-                app.MapGet("/health", Health);
-
-                app.Run();
-            }
-            public static JsonDocument Health()
-            {
-                Dictionary<string, object> response = new Dictionary<string, object>();
-                response.Add("nama", env["NAMA"]);
-                response.Add("nrp", env["NRP"]);
-                response.Add("status", "UP");
-                response.Add("timestamp", DateTime.Now.ToString());;
-                response.Add("uptime", (DateTime.Now - startTime).ToString());
-
-                return JsonSerializer.SerializeToDocument(response);
-            }
-            public static IResult Index()
-            {
-                using(StreamReader file = File.OpenText("./public/index.html"))
+            DotEnv.Load(new DotEnvOptions(
+                envFilePaths: new string[]
                 {
-                    string data = file.ReadToEnd();
-                    return Results.Content(data, "text/html");
+                    ".env"
                 }
+            ));
+            env = DotEnv.Read();
+
+            var builder = WebApplication.CreateBuilder(args);
+            builder.WebHost.UseUrls("http://0.0.0.0:8080");
+            var app = builder.Build();
+
+            app.MapGet("/", Index);
+            app.MapGet("/health", Health);
+
+            app.Run();
+        }
+        public static JsonDocument Health()
+        {
+            Dictionary<string, object> response = new Dictionary<string, object>();
+            response.Add("nama", env["NAMA"]);
+            response.Add("nrp", env["NRP"]);
+            response.Add("status", "UP");
+            response.Add("timestamp", DateTime.Now.ToString());;
+            response.Add("uptime", (DateTime.Now - startTime).ToString());
+
+            return JsonSerializer.SerializeToDocument(response);
+        }
+        public static IResult Index()
+        {
+            using(StreamReader file = File.OpenText("./public/index.html"))
+            {
+                string data = file.ReadToEnd();
+                return Results.Content(data, "text/html");
             }
         }
     }
+}
 ```
 
 Lalu untuk menjalankan applikasi ini, juga menggunakan Docker. Dalam hal ini, applikasi harus dicompile terlebih dahulu sebelum melakukan build image dari Dockerfile. Karena, pada saat kita membuild docker image, applikasi yang sudah di build sebelumnya hanya di copy dan dijalankan saja tanpa melakukan proses build lagi.
