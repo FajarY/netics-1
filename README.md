@@ -2,7 +2,7 @@
 
 Untuk membuat workflow CI-CD, kita bisa menggunakan GithubActions. Tetapi sebelum itu, pada project ini terdapat applikasi .NET yang akan memberikan response API pada endpoint /health.
 
-    ```C#
+```C#
     using dotenv.net;
     using System.Text.Json;
 
@@ -55,7 +55,7 @@ Untuk membuat workflow CI-CD, kita bisa menggunakan GithubActions. Tetapi sebelu
             }
         }
     }
-    ```
+```
 
 Lalu untuk menjalankan applikasi ini, juga menggunakan Docker. Dalam hal ini, applikasi harus dicompile terlebih dahulu sebelum melakukan build image dari Dockerfile. Karena, pada saat kita membuild docker image, applikasi yang sudah di build sebelumnya hanya di copy dan dijalankan saja tanpa melakukan proses build lagi.
 
