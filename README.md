@@ -2,6 +2,10 @@
 
 Untuk membuat workflow CI-CD, kita bisa menggunakan GithubActions. Tetapi sebelum itu, pada project ini terdapat applikasi .NET yang akan memberikan response API pada endpoint /health.
 
+[http://cryothink.com:8080](http://cryothink.com:8080)
+
+[http://cryothink.com:8080/health](http://cryothink.com:8080/health)
+
 ```C#
 using dotenv.net;
 using System.Text.Json;
