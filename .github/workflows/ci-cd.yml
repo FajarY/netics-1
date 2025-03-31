@@ -1,16 +1,19 @@
 name: build-deploy-application
 run-name: application-builder-deployer-${{ github.actor }}
 on:
-  push: 
-    paths-ignore: 
-      - 'README.md'
+  workflow_dispatch:  
+    inputs:
+      environment:
+        type: environment
+        description: Select Build & Deploy Environment
 
 env:
     DOTNET_SDK_VERSION: 8.x.x
 
 jobs:
     build:
-        environment: Production
+        environment: 
+          name: ${{ inputs.environment }}
         runs-on: ubuntu-22.04
         steps:
             - uses: actions/checkout@v4
@@ -48,12 +51,13 @@ jobs:
                 push: true
                 tags: fajary/netics-1:latest
     deploy:
-        environment: Production
+        environment: 
+          name: ${{ inputs.environment }}
         needs: build
         runs-on: ubuntu-22.04
         steps:
           - uses: actions/checkout@v4
-          - name: Connecting to remote Home PC & Deploy
+          - name: Connecting to remote PC & Deploy
             working-directory: ./App
             run: |
               echo "${{ secrets.REMOTE_SSH_KEY }}" > Deploy.pem
