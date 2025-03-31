@@ -29,7 +29,7 @@ namespace NeticsCICD
 
             app.Run();
         }
-        public static JsonDocument Health()
+        public static IResult Health()
         {
             Dictionary<string, object> response = new Dictionary<string, object>();
             response.Add("nama", env["NAMA"]);
@@ -38,7 +38,7 @@ namespace NeticsCICD
             response.Add("timestamp", DateTime.Now.ToString());;
             response.Add("uptime", (DateTime.Now - startTime).ToString());
 
-            return JsonSerializer.SerializeToDocument(response);
+            return Results.Json(response);
         }
         public static IResult Index()
         {
